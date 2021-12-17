@@ -1,10 +1,17 @@
-import requests
+import time
 from bs4 import BeautifulSoup
-import csv
-from itertools import  zip_longest
+from selenium import webdriver
 
-result = requests.get("https://www.ouedkniss.com/telephones/1")
+chromedriver_path= "/usr/lib/chromium-browser/chromedriver"
+driver = webdriver.Chrome(chromedriver_path)
+url = "https://www.ouedkniss.com/telephones/1"
 
-src = result.content
+driver = webdriver.Chrome(chromedriver_path)
+driver.get(url)
+time.sleep(3)
+page = driver.page_source
+driver.quit()
+soup = BeautifulSoup(page, 'lxml')
 
-print(src)
+phone_name = soup.find_all("h1")
+print(phone_name)
