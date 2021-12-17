@@ -2,15 +2,16 @@ import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import csv
+from itertools import zip_longest
 
-name_text = []
-price_text = []
-location_text = []
-
+data_text = []
+number_text = []
+links = []
 
 chromedriver_path= "/usr/lib/chromium-browser/chromedriver"
 driver = webdriver.Chrome(chromedriver_path)
 
+# for i in range(0,100):
 
 url = "https://www.ouedkniss.com/telephones/1"
 
@@ -21,32 +22,26 @@ page = driver.page_source
 driver.quit()
 soup = BeautifulSoup(page, 'html.parser')
 
-phone_name = soup.find_all("h1")
+data = soup.find_all("div" ,{"class":"px-2 pt-1 pb-2"})
+ 
+links_zone = soup.find_all("div" ,{"class":"full-h"})
 
-phone_price = soup.find_all("span" ,{"dir":"ltr"})
+for i in range(len(data)):
+    data_text.append(data[i].text)
 
-phone_location = soup.find_all("div",{"class":"mt-2 d-flex flex-column flex-gap-1 line-height-1"})
+for i in range(len(links_zone)):
+    links.append(links_zone[i].find("a").attrs["href"])
 
-# print(phone_name)
+print(links)
+# print(data_text)
 
-for i in range(len(phone_name)):
-    name_text.append(phone_name[i].text)
+# print(number_text)
 
+# final_list = [data_text]
 
-for i in range(len(phone_price)):
-    price_text.append(phone_price[i].text)
+# exported = zip_longest(*final_list)
 
-
-for i in range(len(phone_location)):
-    location_text.append(phone_location[i].text)
-
-# print(name_text)
-
-# print(price_text)
-
-# print(location_text)
-
-with open("/home/moh/Desktop/phones.csv" ,"w") as file_phones:
-    write = csv.writer(file_phones)
-    write.writerow(["phone name" ,"phone price" ,"phone location"])
-    write.writerows([name_text ,price_text ,location_text])
+# with open("/home/moh/Desktop/phones.csv" ,"w") as file_phones:
+    # write = csv.writer(file_phones)
+    # write.writerow(["phones data" ,])
+    # write.writerows(exported)
