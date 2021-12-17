@@ -1,11 +1,12 @@
 import time
+import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import csv
 from itertools import zip_longest
 
 data_text = []
-number_text = []
+numbers = []
 links = []
 
 chromedriver_path= "/usr/lib/chromium-browser/chromedriver"
@@ -24,24 +25,31 @@ soup = BeautifulSoup(page, 'html.parser')
 
 data = soup.find_all("div" ,{"class":"px-2 pt-1 pb-2"})
  
-links_zone = soup.find_all("div" ,{"class":"full-h"})
+links_zone = soup.find_all("div" ,{"class":"col-sm-6 col-md-4 col-12"})
 
 for i in range(len(data)):
     data_text.append(data[i].text)
 
 for i in range(len(links_zone)):
-    links.append(links_zone[i].find("a").attrs["href"])
+    links.append("https://www.ouedkniss.com"+links_zone[i].find("a").attrs["href"])
 
-print(links)
-# print(data_text)
+for link in links:
+  driver = webdriver.Chrome(chromedriver_path)
+  driver.get(link)
+  time.sleep(1)
+  page = driver.page_source
+  driver.quit()
+  soup = BeautifulSoup(page, 'html.parser')
+  n = soup.find_all("a",{"class":"v-chip v-chip--clickable v-chip--link v-chip--no-color theme--light v-size--default"})
+  for i in range(len(n)):
+    numbers.append(n[i].attrs["href"])
+    print(numbers)
 
-# print(number_text)
+final_list = [data_text,numbers]
 
-# final_list = [data_text]
+exported = zip_longest(*final_list)
 
-# exported = zip_longest(*final_list)
-
-# with open("/home/moh/Desktop/phones.csv" ,"w") as file_phones:
-    # write = csv.writer(file_phones)
-    # write.writerow(["phones data" ,])
-    # write.writerows(exported)
+with open("/home/moh/Desktop/phones.csv" ,"w") as file_phones:
+    write = csv.writer(file_phones)
+    write.writerow(["phones data" ,"number"])
+    write.writerows(exported)
