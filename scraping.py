@@ -1,6 +1,7 @@
 from os import close, sysconf_names
 import os
 from os.path import join
+import os.path
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -11,16 +12,20 @@ from itertools import zip_longest
 
 
 numberpage = input("Enter number pages--> ")
-print("Sorted fabatical[y/n]")
+
 
 directory = "proccesing"
     
 parent_dir = "/home/moh/Desktop"
-     
-path = os.path.join(parent_dir, directory)
 
-os.mkdir(path) 
-print("Directory '% s' created" % directory) 
+if os.path.isdir("/home/moh/Desktop/proccesing"):
+    print("run...")
+else:
+     
+ path = os.path.join(parent_dir, directory)
+ os.mkdir(path) 
+ print("Directory '% s' created" % directory)
+ print("run...")
 
 data_text = []
 numbers = []
@@ -29,7 +34,34 @@ description = []
 final_list = []
 counter = 0
 
-for i in range(0,int(numberpage)):
+for i in range(1,int(numberpage)+2):
+ if i == int(numberpage)+1:
+  temp_a = []
+  temp_b = []
+  temp_c = []
+  for j in range(1,int(numberpage)+1):
+
+   if j == int(numberpage)+1:
+      for n in range(1,int(numberpage)+1):
+       if n == int(numberpage)+1:
+         os.exit("finish your csv in '/home/moh/Desktop/proccesing/phonesfinal.csv'")
+       os.remove('/home/moh/Desktop/proccesing/phones'+str(n)+'.csv')    
+    
+   with open('/home/moh/Desktop/proccesing/phones'+str(j)+'.csv','rt')as f:
+     data = csv.reader(f)
+     for row in data:
+        temp_a.append(row[0])
+        temp_b.append(row[1])
+        temp_c.append(row[2])
+
+   final_list = [temp_a,temp_b,temp_c]
+   exported = zip_longest(*final_list)
+
+   with open("/home/moh/Desktop/proccesing/phonesfinal.csv" ,"w") as file_phones:
+      write = csv.writer(file_phones)
+      write.writerows(exported)
+      file_phones.close()
+
  counter = counter + 1
  data_text.clear()
  numbers.clear()
@@ -40,7 +72,7 @@ for i in range(0,int(numberpage)):
  chromedriver_path= "/usr/lib/chromium-browser/chromedriver"
  # for i in range(0,100):
 
- url = "https://www.ouedkniss.com/telephones/"+str(i)
+ url = "https://www.ouedkniss.com/telephones/"+str(i-1)
 
  driver = webdriver.Chrome(chromedriver_path)
  driver.get(url)
@@ -135,6 +167,3 @@ for i in range(0,int(numberpage)):
       write.writerows(exported)
       file_phones.close()
       break
-
-  
-    
