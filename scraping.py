@@ -36,16 +36,20 @@ counter = 0
 
 for i in range(1,int(numberpage)+2):
  if i == int(numberpage)+1:
+
   temp_a = []
   temp_b = []
   temp_c = []
-  for j in range(1,int(numberpage)+1):
+  
+  for j in range(1,int(numberpage)+2):
 
    if j == int(numberpage)+1:
       for n in range(1,int(numberpage)+1):
-       if n == int(numberpage)+1:
-         os.exit("finish your csv in '/home/moh/Desktop/proccesing/phonesfinal.csv'")
-       os.remove('/home/moh/Desktop/proccesing/phones'+str(n)+'.csv')    
+        if n == int(numberpage)+1:
+          os.exit("finish your csv in '/home/moh/Desktop/proccesing/phonesfinal.csv'")
+        os.remove('/home/moh/Desktop/proccesing/phones'+str(n)+'.csv')    
+
+      
     
    with open('/home/moh/Desktop/proccesing/phones'+str(j)+'.csv','rt')as f:
      data = csv.reader(f)
