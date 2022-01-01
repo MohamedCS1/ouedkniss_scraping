@@ -12,7 +12,7 @@ In this case, we collect phones data from ouedkniss in a large amount and save i
 - check chromium path in project (chromedriver_path = {your_path})
 - install BeautifulSoup:
 <pre> pip install beautifulsoup4 </pre>
-- install webdriver manager
+- install webdriver manager:
 <pre> pip install webdriver-manager </pre>
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
