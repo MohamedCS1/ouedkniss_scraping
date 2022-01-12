@@ -6,14 +6,14 @@ Web scraping is the process of collecting structured web data in an automated fa
 In this case, we collect phones data from ouedkniss in a large amount and save it to a csv file.
 ## Guide
 - install libraries:
-<pre> pip /or/ pip3</pre>
+<pre>$ pip /or/ pip3</pre>
 - Check all paths
 - download chromium
 - check chromium path in project (chromedriver_path = {your_path})
 - install BeautifulSoup:
-<pre> pip install beautifulsoup4 </pre>
+<pre>$ pip install beautifulsoup4 </pre>
 - install webdriver manager:
-<pre> pip install webdriver-manager </pre>
+<pre>$ pip install webdriver-manager </pre>
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/Naereen/badges)
